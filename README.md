@@ -1,123 +1,95 @@
-# 📸 Instagram Video Downloader API (Python)
+# 🎥 Multi-Platform Video Downloader REST API (v2.0)
 
-ઇન્સ્ટાગ્રામ (Instagram Reels, Videos, IGTV અને Posts) માંથી વિડીયો સરળતાથી ડાઉનલોડ કરવા માટે **FastAPI** અને **yt-dlp** પર આધારિત હાઈ-પરફોર્મન્સ REST API.
+**Instagram**, **Facebook**, અને **YouTube** માંથી Reels, Shorts અને Videos ડાઉનલોડ કરવા માટેનું હાઈ-પરફોર્મન્સ Python REST API (FastAPI & yt-dlp).
 
 ---
 
 ## 🚀 Features (મુખ્ય સુવિધાઓ)
-- ⚡ **Super Fast & Lightweight**: FastAPI આધારિત અસિંક આર્કિટેક્ચર.
-- 🎯 **All-in-One Support**: Reels, Posts, Videos અને IGTV સપોર્ટ.
-- 📦 **Direct Media Extraction**: HD MP4 Direct Download Link, Thumbnail, Title, Duration, Author, Views કાઢે છે.
-- 📥 **Direct File Streaming (`/api/download`)**: બ્રાઉઝર કે અન્ય એપ્લિકેશનમાં સીધી જ `.mp4` ફાઈલ ડાઉનલોડ થાય.
-- 💻 **Modern Web Tester UI**: લિંક પેસ્ટ કરીને તરત જ વિડીયો પ્લે અને ડાઉનલોડ ટેસ્ટ કરી શકાય.
-- 📖 **Interactive Swagger UI Docs**: `/docs` પર સંપૂર્ણ API ટેસ્ટિંગ ટૂલ.
+- 🎯 **3-in-1 Dedicated Support**: Instagram, Facebook અને YouTube ત્રણેયના અલગ-અલગ Endpoints.
+- ✨ **Universal Smart Auto-Detect**: કોઈપણ લિંક નાખો, API પોતે જ પ્લેટફોર્મ ઓળખી લેશે.
+- ⚡ **Direct Media Stream**: HD MP4 Direct Download Link, Thumbnail, Title, Duration, Author અને Views.
+- 📥 **Direct File Streaming (`/download`)**: વિડીયો સીધો જ તમારા કમ્પ્યુટર કે ફોનમાં `.mp4` ફાઈલ તરીકે ડાઉનલોડ થાય છે.
+- 💻 **Modern Web Tester UI**: Tabs સાથેનું ઇન્ટરેક્ટિવ વેબ ઇન્ટરફેસ.
+- 📖 **Interactive Swagger Docs**: `/docs` પર સંપૂર્ણ API ટેસ્ટિંગ ટૂલ.
 
 ---
 
-## 🛠️ Installation & Setup (કેવી રીતે શરૂ કરવું)
+## 🔌 API Endpoints & Usage
 
-### 1. Requirements ઇન્સ્ટોલ કરો:
-```bash
-cd C:\Users\Hemal\.gemini\antigravity-ide\scratch\instagram_downloader_api
-pip install -r requirements.txt
-```
+### 1. 📸 Instagram Endpoints
+- **Info**: `GET /api/instagram/info?url=https://www.instagram.com/reel/...`
+- **Download**: `GET /api/instagram/download?url=https://www.instagram.com/reel/...`
 
-### 2. API સર્વર રન કરો:
-```bash
-python main.py
-```
-અથવા Uvicorn થી રન કરો:
-```bash
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
-```
+### 2. 📘 Facebook Endpoints
+- **Info**: `GET /api/facebook/info?url=https://www.facebook.com/reel/...` (or `https://fb.watch/...`)
+- **Download**: `GET /api/facebook/download?url=https://www.facebook.com/reel/...`
 
-સર્વર શરૂ થયા પછી નીચેની લિંક્સ ખોલો:
-- **Web UI & Tester**: [http://127.0.0.1:8000](http://127.0.0.1:8000)
-- **Swagger API Documentation**: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+### 3. ▶️ YouTube Endpoints
+- **Info**: `GET /api/youtube/info?url=https://www.youtube.com/shorts/...` (or `https://youtu.be/...`)
+- **Download**: `GET /api/youtube/download?url=https://www.youtube.com/shorts/...`
+
+### 4. ✨ Universal Auto-Detect Endpoints
+- **Info**: `GET /api/universal/info?url={ANY_SUPPORTED_URL}`
+- **Download**: `GET /api/universal/download?url={ANY_SUPPORTED_URL}`
 
 ---
 
-## 🔌 API Endpoints & Usage (API નો ઉપયોગ કેવી રીતે કરવો)
+## 📦 JSON Response Example
 
-### 1. Get Video Information (Metadata & Direct Link)
-
-#### **Endpoint:** `GET /api/info`
-```http
-GET /api/info?url=https://www.instagram.com/reel/C8.../
-```
-
-#### **અથવા `POST /api/info`:**
-```bash
-curl -X POST "http://127.0.0.1:8000/api/info" \
-     -H "Content-Type: application/json" \
-     -d '{"url": "https://www.instagram.com/reel/C8..."}'
-```
-
-#### **Response (JSON Output Example):**
 ```json
 {
   "success": true,
-  "id": "C8AbCdEfGh",
-  "title": "Amazing Nature Reel",
-  "description": "Beautiful sunset in the mountains #nature",
-  "uploader": "nature_lover",
-  "uploader_id": "nature_lover",
-  "thumbnail": "https://instagram.f...net/...jpg",
-  "duration": 15.4,
-  "view_count": 125000,
-  "like_count": 8450,
-  "comment_count": 120,
-  "video_url": "https://instagram.f...net/...mp4",
-  "width": 1080,
-  "height": 1920,
+  "platform": "youtube",
+  "id": "dQw4w9WgXcQ",
+  "title": "Rick Astley - Never Gonna Give You Up",
+  "description": "The official video for...",
+  "uploader": "Rick Astley",
+  "uploader_id": "RickAstleyVEVO",
+  "thumbnail": "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+  "duration": 213.0,
+  "view_count": 1500000000,
+  "like_count": 16000000,
+  "video_url": "https://rr3---sn-....googlevideo.com/videoplayback?...",
+  "width": 1920,
+  "height": 1080,
   "ext": "mp4",
-  "source_url": "https://www.instagram.com/reel/C8.../"
+  "source_url": "https://youtu.be/dQw4w9WgXcQ"
 }
 ```
-
----
-
-### 2. Direct Video Download Stream (સીધો વિડીયો ફાઇલ ડાઉનલોડ કરવા)
-
-#### **Endpoint:** `GET /api/download`
-```http
-GET /api/download?url=https://www.instagram.com/reel/C8.../
-```
-આ URL ને બ્રાઉઝરમાં ખોલવાથી અથવા તમારા એપ માં કોલ કરવાથી સીધી `instagram_<id>.mp4` ફાઈલ ડાઉનલોડ થશે.
 
 ---
 
 ## 🐍 Client Integration Examples
 
-### Python (using `requests`):
+### Python:
 ```python
 import requests
 
-api_url = "http://127.0.0.1:8000/api/info"
-instagram_link = "https://www.instagram.com/reel/C8abc123/"
+api_url = "http://127.0.0.1:8000/api/universal/info"
+video_url = "https://www.youtube.com/shorts/example123"
 
-response = requests.get(api_url, params={"url": instagram_link})
-data = response.json()
-
-if data.get("success"):
-    print(f"Title: {data['title']}")
-    print(f"Direct MP4 Link: {data['video_url']}")
-    
-    # વિડીયો ડાઉનલોડ કરી સેવ કરવા માટે:
-    video_bytes = requests.get(data['video_url']).content
-    with open(f"{data['id']}.mp4", "wb") as f:
-        f.write(video_bytes)
-    print("Video successfully downloaded!")
+res = requests.get(api_url, params={"url": video_url}).json()
+if res.get("success"):
+    print(f"Platform: {res['platform']}")
+    print(f"Title: {res['title']}")
+    print(f"Direct MP4 Link: {res['video_url']}")
 ```
 
-### JavaScript / Frontend (Fetch API):
+### JavaScript:
 ```javascript
-async function downloadInstagramVideo(url) {
-    const res = await fetch(`http://127.0.0.1:8000/api/info?url=${encodeURIComponent(url)}`);
+async function fetchMedia(url) {
+    const res = await fetch(`http://127.0.0.1:8000/api/universal/info?url=${encodeURIComponent(url)}`);
     const data = await res.json();
-    if (data.success) {
-        console.log("Video Direct URL:", data.video_url);
-        window.open(data.video_url, '_blank');
-    }
+    console.log(data);
 }
 ```
+
+---
+
+## 🚀 Local Run:
+```bash
+pip install -r requirements.txt
+python main.py
+```
+- Web UI: `http://127.0.0.1:8000`
+- Swagger Docs: `http://127.0.0.1:8000/docs`
